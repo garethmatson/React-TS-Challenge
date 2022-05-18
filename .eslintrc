@@ -5,7 +5,10 @@
     "es2021": true
   },
   "plugins": ["unused-imports"],
-  "parserOptions": { "ecmaVersion": 8 }, // to enable features such as async/await
+  "parserOptions": { 
+    "ecmaVersion": 8,
+    "sourceType": "module"
+  }, // to enable features such as async/await
   "ignorePatterns": ["node_modules", "!.prettierrc.js"],
   "extends": ["eslint:recommended"],
   "overrides": [
@@ -32,7 +35,7 @@
         "react/prop-types": "off",
         "react/display-name": "off",
         "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
-
+        "react/react-in-jsx-scope": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "unused-imports/no-unused-imports": "off",
         "unused-imports/no-unused-vars": "warn",
