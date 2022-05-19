@@ -3,7 +3,7 @@ import { MovieListItem } from '../../shared/types'
 import { getTopRated } from '../../services/movies.services'
 
 const useTopRated = () => {
-  const [movies, setMovie] = useState<MovieListItem[]>([])
+  const [movies, setMovie] = useState<MovieListItem[] | null>(null)
   const [error, setError] = useState<Error | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 

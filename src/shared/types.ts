@@ -5,3 +5,10 @@ export type MovieListItem = {
   release_date: string
   vote_count: number
 }
+
+export type TopRatedMovies = {
+  page: number
+  results: MovieListItem[]
+  total_pages: number
+  total_results: number
+}
