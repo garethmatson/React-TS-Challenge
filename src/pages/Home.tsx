@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import useTopRated from '../hooks/useTopRated'
 import Card from '../components/Card'
 import Title from '../components/Title'
 import styled from 'styled-components'
+import Colors from '../shared/colors'
+import {MovieListItem} from '../shared/types'
+import debounce from 'lodash.debounce'
 
 const ListContainer = styled.div`
   display: grid;
@@ -25,8 +28,40 @@ const LoadingSpinner = styled.div`
   align-self: center;
 `
 
+const SearchInput = styled.input`
+  height: 50px;
+  width: 50%;
+  border-radius: 5rem;
+  padding: 0px 15px;
+  margin-bottom: 3rem;
+  background-color: ${Colors.inputBackground};
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+`;
+
 export const Home = () => {
   const { movies, error, isLoading } = useTopRated()
+  const [displayedMovies, setDisplayedMovies] = useState<MovieListItem[] | null>(null)
+
+  const onUpdateSearchQuery = (query: string) => {
+    movieQueryResult(query)
+  }
+  const onDebouncedUpdateSearchQuery = useCallback(debounce(onUpdateSearchQuery, 1000), [onUpdateSearchQuery])
+
+  const movieQueryResult = (query: string) => {
+    if(movies) {
+     setDisplayedMovies(movies.filter(movie => movie.title.includes(query)))
+    }
+  }
+
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onDebouncedUpdateSearchQuery(event.target.value)
+  }
+
+  useEffect(() => {
+    setDisplayedMovies(movies)
+  }, [movies])
 
   if (isLoading) {
     return <LoadingSpinner />
@@ -39,9 +74,10 @@ export const Home = () => {
   return (
     <>
       <Title>Top Rated Movies List</Title>
+      <SearchInput onChange={onInputChange} />
       <ListContainer>
-        {movies &&
-          movies.map((movie, index) => {
+        {displayedMovies &&
+          displayedMovies.map((movie, index) => {
             return <Card key={index} title={movie.title} poster_path={movie.poster_path ?? ''} />
           })}
       </ListContainer>
