@@ -3,8 +3,10 @@ import styled from 'styled-components'
 import Poster from './Poster'
 import Title from './Title'
 import Colors from '../shared/colors'
+import { useNavigate } from 'react-router-dom'
 
 interface CardProps {
+  id: number
   poster_path: string
   title: string
 }
@@ -29,9 +31,14 @@ const CardContainer = styled.div`
  * @returns
  *
  */
-const Card = ({ poster_path, title }: CardProps) => {
+const Card = ({ poster_path, title, id }: CardProps) => {
+  const navigate = useNavigate()
+
+  const onClick = () => {
+    navigate(`/movie-detail/${id}`)
+  }
   return (
-    <CardContainer>
+    <CardContainer onClick={onClick}>
       <Poster poster_path={poster_path} />
       <Title>{title}</Title>
     </CardContainer>

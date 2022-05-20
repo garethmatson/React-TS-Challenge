@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './pages/Home'
+import Movie from './pages/MovieDetails'
 import './global.css'
 
 /**
@@ -12,16 +13,17 @@ class App extends Component {
   render() {
     return (
       <>
-        <BrowserRouter>
+        <HashRouter>
           <Header />
           <main>
             <section>
               <Routes>
                 <Route path={'/'} element={<Home />} />
+                <Route path={'/movie-detail/:id'} element={<Movie />} />
               </Routes>
             </section>
           </main>
-        </BrowserRouter>
+        </HashRouter>
       </>
     )
   }

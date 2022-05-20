@@ -12,7 +12,7 @@ const useTopRated = () => {
       try {
         setIsLoading(true)
         const response = await getTopRated()
-        if (response != null) {
+        if (response) {
           setMovie(response)
         }
       } catch (e) {

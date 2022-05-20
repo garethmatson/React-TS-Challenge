@@ -4,6 +4,7 @@ export type MovieListItem = {
   overview: string
   release_date: string
   vote_count: number
+  id: number
 }
 
 export type TopRatedMovies = {
